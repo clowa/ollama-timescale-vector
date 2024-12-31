@@ -7,7 +7,7 @@ This project combines several key components:
 - Docker for containerization and deployment
 - LlamaIndex for document indexing and retrieval
 - Ollama for running local LLMs and embeddings
-- TimescaleDB for vector storage
+- PgVector for vector storage
 
 ## Prerequisites
 
@@ -26,7 +26,7 @@ docker compose up
 This will:
 
 - Start Ollama service. If the required modules haven't been downloaded they will be pulled on first execution. _(llama3.2:1b and nomic-embed-text)_
-- Launch TimescaleDB for vector storage
+- Launch PgVector for vector storage
 - Start the main application that indexes your documents
 
 ## Components

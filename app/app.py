@@ -1,12 +1,16 @@
-from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader
+import os
+
+from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader, StorageContext
 from llama_index.llms.ollama import  Ollama
 from llama_index.embeddings.ollama import OllamaEmbedding
 # from llama_index.vector_stores import TimescaleVectorStore
 
 from ollama import Client
+from llama_index.vector_stores.postgres import PGVectorStore
 
 
-ollama_url = "http://ollama:11434"
+postgres_service_url = os.environ["POSTGRES_SERVICE_URL"]
+ollama_url = os.environ["OLLAMA_SERVICE_URL"]
 
 data_directory = "/data"
 ollama_model = "llama3.2:1b"
@@ -41,4 +45,22 @@ loader = SimpleDirectoryReader(
 )
 
 documents = loader.load_data()
-index = VectorStoreIndex.from_documents(documents)
+
+# Create a TimescaleVectorStore instance
+vector_store = PGVectorStore.from_params(
+    connection_string=postgres_service_url,
+    table_name="documents",
+    embed_dim=768,
+    hnsw_kwargs={
+        "hnsw_m": 16,
+        "hnsw_ef_construction": 64,
+        "hnsw_ef_search": 40,
+        "hnsw_dist_method": "vector_cosine_ops",
+    },
+)
+
+# Create a new VectorStoreIndex using the TimescaleVectorStore
+storage_context = StorageContext.from_defaults(vector_store=vector_store)
+index = VectorStoreIndex.from_documents(
+    documents, storage_context=storage_context
+)
