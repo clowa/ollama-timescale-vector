@@ -7,9 +7,11 @@ from llama_index.embeddings.ollama import OllamaEmbedding
 
 from ollama import Client
 from llama_index.vector_stores.postgres import PGVectorStore
+from sqlalchemy import make_url
 
 
 postgres_service_url = os.environ["POSTGRES_SERVICE_URL"]
+postgres = make_url(postgres_service_url)
 ollama_url = os.environ["OLLAMA_SERVICE_URL"]
 
 data_directory = "/data"
@@ -48,7 +50,11 @@ documents = loader.load_data()
 
 # Create a TimescaleVectorStore instance
 vector_store = PGVectorStore.from_params(
-    connection_string=postgres_service_url,
+    host=postgres.host,
+    port=postgres.port,
+    user=postgres.username,
+    password=postgres.password,
+    database=postgres.database,
     table_name="documents",
     embed_dim=768,
     hnsw_kwargs={

@@ -8,7 +8,7 @@ services:
     volumes:
       - ~/github/clowa:/data
     environment:
-      - POSTGRES_SERVICE_URL=postgres://tsdbuser:${TSDB_PASSWORD}@db:5432/lama-vector
+      - POSTGRES_SERVICE_URL=postgresql://dbuser:${TSDB_PASSWORD}@db:5432/llama-vector
       - OLLAMA_SERVICE_URL=http://ollama:11434
     depends_on:
       - ollama
@@ -30,6 +30,6 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=lama-vector
-      - POSTGRES_USER=tsdbuser
+      - POSTGRES_DB=llama-vector
+      - POSTGRES_USER=dbuser
       - POSTGRES_PASSWORD=${TSDB_PASSWORD}

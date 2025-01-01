@@ -17,6 +17,7 @@ RUN apt-get update \
                 build-essential \
         && pip install \
                 llama-index-vector-stores-postgres \
+                sqlalchemy \
         && rm -rf /var/lib/apt/lists/*
         
 RUN pip install \
