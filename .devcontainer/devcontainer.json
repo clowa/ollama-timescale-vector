@@ -44,6 +44,9 @@
     5432 // PostgreSQL
   ],
 
+  // Mount host directories into the container.
+  "mounts": ["source=${localEnv:HOME}/.ollama,target=/home/vscode/.ollama,type=bind"],
+
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "pip3 install --user -r app/requirements.txt",
 

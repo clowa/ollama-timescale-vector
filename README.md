@@ -29,6 +29,13 @@ This will:
 - Launch TimescaleDB for vector storage
 - Start the main application that indexes your documents
 
+### Devcontainer
+
+If you are using VSCode, you can use the provided devcontainer to develop the application.
+
+> [!TIP]
+> The devcontainer is configured to share the host's ollama modells with the container, so the container doesn't grow huge in size. However, if you want to disable this behavior your can comment out the mount of the `~/.ollama` directory in the `devcontainer.json` file.
+
 ## Components
 
 - `app` - Python application that handles document processing and indexing
