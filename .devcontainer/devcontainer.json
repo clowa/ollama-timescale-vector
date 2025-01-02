@@ -1,20 +1,20 @@
 {
   "image": "mcr.microsoft.com/devcontainers/python:3.13-bookworm",
   "features": {
-    // "ghcr.io/devcontainers/features/common-utils:2": {
-    //   "installZsh": "true",
-    //   "configureZshAsDefaultShell": "true",
-    //   "username": "vscode",
-    //   "userUid": "1000",
-    //   "userGid": "1000",
-    //   "upgradePackages": "true"
-    // },
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "true",
+      "configureZshAsDefaultShell": "true",
+      // "username": "vscode",
+      // "userUid": "1000",
+      // "userGid": "1000",
+      "upgradePackages": "true"
+    },
     "ghcr.io/devcontainers/features/python:1": "none",
     "ghcr.io/devcontainers/features/git:1": {
       "version": "latest",
       "ppa": "false"
     },
-    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
   // Configure tool-specific properties.
   "customizations": {
@@ -45,10 +45,13 @@
   ],
 
   // Mount host directories into the container.
-  "mounts": ["source=${localEnv:HOME}/.ollama,target=/home/vscode/.ollama,type=bind"],
+  "mounts": [
+    "source=${localEnv:HOME}/.ollama,target=/home/vscode/.ollama,type=bind",
+    "source=user-local,target=/home/vscode/.local,type=volume"
+  ],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "pip3 install --user -r app/requirements.txt",
+  "postCreateCommand": "chown -R 1000:1000 ~/.local && pip3 install --user -r app/requirements.txt",
 
   // Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
   "remoteUser": "vscode"
