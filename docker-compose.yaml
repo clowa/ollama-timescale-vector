@@ -4,8 +4,8 @@ services:
       context: app
       dockerfile: Dockerfile
     volumes:
-      - ~/github/clowa:/data
-      # - ./app:/data
+      # - ~/github/clowa:/data
+      - .:/data
     environment:
       - POSTGRES_SERVICE_URL=postgresql://dbuser:${TSDB_PASSWORD}@db:5432/llama-vector
       - OLLAMA_SERVICE_URL=http://ollama:11434
