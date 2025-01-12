@@ -38,4 +38,4 @@ If you are using VSCode, you can use the provided devcontainer to develop the ap
 
 ## Components
 
-- `app` - Python application that handles document processing and indexing
+- `db` - Scripts to initiate the TimescaleDB with pgvector and pgai extensions

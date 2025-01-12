@@ -1,5 +1,11 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/go
 {
-  "image": "mcr.microsoft.com/devcontainers/python:3.13-bookworm",
+  "name": "Go",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "image": "mcr.microsoft.com/devcontainers/go:1-1.23-bookworm",
+
+  // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
       "installZsh": "true",
@@ -9,50 +15,55 @@
       // "userGid": "1000",
       "upgradePackages": "true"
     },
-    "ghcr.io/devcontainers/features/python:1": "none",
     "ghcr.io/devcontainers/features/git:1": {
       "version": "latest",
       "ppa": "false"
     },
+    "ghcr.io/devcontainers-contrib/features/go-task:1": {},
+    "ghcr.io/devcontainers-contrib/features/trivy:1": {},
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
+
   // Configure tool-specific properties.
   "customizations": {
     // Configure properties specific to VS Code.
     "vscode": {
-      // Set *default* container specific settings.json values on container create.
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python"
-      }
-    },
-    // Configure VsCode extensions to install.
-    "extensions": [
-      "eamodio.gitlens",
-      "esbenp.prettier-vscode",
-      "DavidAnson.vscode-markdownlint",
-      "EditorConfig.EditorConfig",
-      "task.vscode-task",
-      "AquaSecurityOfficial.trivy-vulnerability-scanner",
-      "ms-azuretools.vscode-docker",
-
-      "ms-python.python",
-      "ms-toolsai.jupyter"
-    ]
+        "terminal.integrated.shell.linux": "/bin/zsh",
+        "dev.containers.copyGitConfig": true
+      },
+      "extensions": [
+        "eamodio.gitlens",
+        "DavidAnson.vscode-markdownlint",
+        "EditorConfig.EditorConfig",
+        "task.vscode-task",
+        "AquaSecurityOfficial.trivy-vulnerability-scanner",
+        "ms-vscode.go",
+        "golang.go",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
   },
+
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [
     5432 // PostgreSQL
   ],
 
+  // Use 'portsAttributes' to set default properties for specific forwarded ports.
+  // More info: https://containers.dev/implementors/json_reference/#port-attributes
+  //   "portsAttributes": {
+  //     "9000": {
+  //       "label": "Hello Remote World",
+  //       "onAutoForward": "notify"
+  //     }
+  //   }
   // Mount host directories into the container.
-  "mounts": [
-    "source=${localEnv:HOME}/.ollama,target=/home/vscode/.ollama,type=bind",
-    "source=user-local,target=/home/vscode/.local,type=volume"
-  ],
+  "mounts": ["source=${localEnv:HOME}/.ollama,target=/home/vscode/.ollama,type=bind"],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "chown -R 1000:1000 ~/.local && pip3 install --user -r app/requirements.txt",
+  // "postCreateCommand": "go version",
 
-  // Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
   "remoteUser": "vscode"
 }
