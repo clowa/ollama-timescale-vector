@@ -54,7 +54,7 @@ openpyxl==3.1.5
 packaging==24.2
 pandas==2.2.3
 pgvector==0.3.6
-pillow==11.0.0
+pillow==12.1.1
 propcache==0.2.1
 psycopg2-binary==2.9.10
 pydantic==2.10.4
